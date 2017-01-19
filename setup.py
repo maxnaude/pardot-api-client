@@ -9,7 +9,10 @@ setup(
     url='https://github.com/maxnaude/pardot-api-client',
     packages=find_packages(),
     dependency_links=[],
-    install_requires=['hammock==0.2.4'],
+    install_requires=[
+        'hammock==0.2.4',
+        'pprintpp==0.3.0'
+    ],
     test_suite='nose.collector',
     tests_require=['nose', 'responses'],
     include_package_data=True,
