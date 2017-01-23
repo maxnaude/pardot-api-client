@@ -1,22 +1,34 @@
 pardot-api-client
 ==================
 
-A simple Python client for interacting with the Pardot API.
+A Python client for interacting with the Pardot API using idiomatic statements, eg:
+
+    .. code-block:: python
+
+        client.prospect.read('someone@example.com')
 
 
 Features
 --------
 
+* Supports Python 2 and 3
 * Supports API version 3
 * Supports all API entities: Account, Campaign, Custom Field, Custom Redirect, Dynamic Content, Email, Email Clicks, Form, Identified Company, Lifecycle History, Lifecycle Stage, List, List Membership, Opportunity, Profile, Profile Criteria, Prospect, Prospect Account, Tag, Tag Object, User, Visit, Visitor, Visitor Activity, Visitor Page View, Visitor Referrer
-* Supports all API operations: query, assign, unassign, create, batchCreate, read, update, batchUpdate, upsert, batchUpsert, delete
+* Supports most API operations: query, assign, unassign, create, read, update, upsert, delete
 * Supports un-setting of field values
 * Handles API session timeouts implicitly
+* Transparent API error feedback
+* Optional request retries with incremental back-off
+
+
+Planned features
+----------------
+
+* Support for API version 4
+* Support for API batch operations: batchCreate, batchUpdate, batchUpsert
 * Supports result set manipulation, eg specifying fields, limit, offset, sort_by, sort_order
 * Implicit results pagination
 * Implicit chunking for batch operationss
-* Transparent API error feedback
-* Optional request retries with incremental back-off
 
 
 Installation
@@ -52,11 +64,3 @@ Usage
         >>> for r in client.prospect.query(new=True):
         ...    print(r)
         ...
-
-
-Testing
--------
-
-.. code-block:: bash
-
-    $ python setup.py test
