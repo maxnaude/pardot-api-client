@@ -69,9 +69,7 @@ RESOURCE_OPERATIONS = {
         'update': [('id', ), ('list_id', 'prospect_id')],
     },
     'opportunity': {
-        'query': [()]
-    },
-    'opportunity ': {
+        'query': [()],
         'create': [
             ('prospect_email', 'name', 'value', 'probability'),
             ('prospect_id', 'name', 'value', 'probability'),
@@ -82,9 +80,7 @@ RESOURCE_OPERATIONS = {
         'update': [('id', )],
     },
     'prospect': {
-        'query': [()]
-    },
-    'prospect ': {
+        'query': [()],
         'assign': [('email', ), ('id', )],
         'batchCreate': [('prospects', )],
         'batchUpdate': [('prospects', )],
