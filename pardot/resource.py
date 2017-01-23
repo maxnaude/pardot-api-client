@@ -3,6 +3,8 @@ import urllib
 from time import sleep
 from math import sqrt
 
+from six.moves.urllib.parse import urlencode
+
 import hammock
 
 
@@ -12,8 +14,6 @@ logger = logging.getLogger(__name__)
 def fib(n):
     """
     Returns the nth number in the Fibonacci sequence.
-
-    Used for incremental backoff during retries.
     """
     return ((1 + sqrt(5))**n - (1 - sqrt(5))**n) / (2**n * sqrt(5))
 
@@ -74,12 +74,12 @@ class Resource(object):
             # some calls require an resource identifier like email or id
             for arg in args:
                 # TODO: this is a naive approach to guess the identifier
-                #       field name and will fail for some resources
+                #       field name and will fail for some resource
                 #       operations, eg listMembership.read()
                 identifier_name = 'email' if '@' in arg else 'id'
 
                 # ensure that the identifier is url-safe
-                urlsafe_arg = urllib.parse.urlencode({'': arg})[1:]
+                urlsafe_arg = urlencode({'': arg})[1:]
 
                 # add the identifier field name and value to the request
                 request = request(identifier_name, urlsafe_arg)
