@@ -3,9 +3,9 @@ pardot-api-client
 
 A Python client for interacting with the Pardot API using idiomatic statements, eg:
 
-    .. code-block:: python
+.. code-block:: python
 
-        client.prospect.read('someone@example.com')
+    client.prospect.read('someone@example.com')
 
 
 Features
