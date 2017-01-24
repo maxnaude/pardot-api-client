@@ -1,3 +1,5 @@
+|pypi|
+
 pardot-api-client
 ==================
 
@@ -91,3 +93,5 @@ For instance, the API documentation states that "assign" operations on "prospect
 
 
 
+.. |pypi| image:: https://badge.fury.io/py/pardot-api-client.svg
+    :target: https://badge.fury.io/py/pardot-api-client
