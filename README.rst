@@ -76,7 +76,7 @@ To keep the client's API simple it makes educated guesses about the identifiers 
 
 To make this work all required parameters (except user_key and api_key, which are automatically added) must be passed as positional arguments and any optional parameters passed as keyword arguments.
 
-For instance, the API documentation states that "assign" operations on "prospect" resources may use either "email" or "id" as identifiers and must supply any of the following parameters:  "user_email" or "user_id" or "group_id".  Any of the forms below could be used to make this call from the client:
+For instance, the API documentation states that "assign" operations on "prospect" resources may use either "email" or "id" as identifiers and must supply one of the following parameters:  "user_email" or "user_id" or "group_id".  Any of the forms below could be used to make this call from the client:
 
 .. code-block:: python
 
