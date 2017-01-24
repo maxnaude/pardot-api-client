@@ -1,3 +1,4 @@
+from pardot import constants
 from pardot.resource import Resource
 
 
@@ -33,6 +34,9 @@ class APIClient(object):
             api_resource_name = '%s%s' % (
                 resource_name.split('_')[0],
                 ''.join(part.title() for part in resource_name.split('_')[1:]))
+
+        if api_resource_name not in constants.RESOURCE_OPERATIONS:
+            raise Exception('Resource "%s" not supported' % api_resource_name)
 
         return Resource(
             api_resource_name, self.email, self.password, self.user_key,
