@@ -7,6 +7,8 @@ from six.moves.urllib.parse import urlencode
 
 import hammock
 
+from pardot import constants
+
 
 logger = logging.getLogger(__name__)
 
@@ -68,25 +70,62 @@ class Resource(object):
 
             Runs the request against the API and returns the response.
             """
+            if operation not in constants.RESOURCE_OPERATIONS[self.name]:
+                raise Exception('Operation "%s" not supported for "%s"' % (
+                    operation, self.name))
+
             request = self.api(
                 self.name, 'version', self.api_version, 'do', operation)
 
             # some calls require an resource identifier like email or id
-            for arg in args:
-                # TODO: this is a naive approach to guess the identifier
-                #       field name and will fail for some resource
-                #       operations, eg listMembership.read()
-                identifier_name = 'email' if '@' in arg else 'id'
+            # to keep the API simple the parameters are guessed based on
+            # the args and some conventional assumptions mapped in
+            # constants
+            identifiers = self.get_parameter_identifiers(
+                constants.RESOURCE_OPERATIONS[self.name][operation], args)
 
+            if len(args) != len(identifiers):
+                raise Exception(
+                    'Arguments (%d) do not match identifiers (%d) for '
+                    'operation %s on %s' % (
+                        len(args), len(identifiers), operation, self.name))
+
+            for i, arg in enumerate(args):
                 # ensure that the identifier is url-safe
                 urlsafe_arg = urlencode({'': arg})[1:]
 
                 # add the identifier field name and value to the request
-                request = request(identifier_name, urlsafe_arg)
+                request = request(identifiers[i], urlsafe_arg)
 
             return self.get_response_content(request, **kwargs)
 
         return response
+
+    def get_parameter_identifiers(self, valid_identifiers, arguments):
+        """
+        Guesses the correct indentifiers for resource operation
+        parameters based on the arguments.
+
+        Returns a list of identifier names.
+        """
+        if len(valid_identifiers) == 1:
+            # there is only one valid set of parameters
+            return valid_identifiers[0]
+
+        for identifiers in valid_identifiers:
+            matched_identifiers = []
+            for i in range(min(len(identifiers), len(arguments))):
+                found = False
+                for test in constants.RESOURCE_PARAMETER_TYPE_TESTS.values():
+                    if test(identifiers[i], arguments[i]):
+                        found = True
+                        break
+                matched_identifiers.append(found)
+
+            if all(matched_identifiers):
+                return identifiers
+
+        return []
 
     def get_api_response(self, request, **kwargs):
         """
