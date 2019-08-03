@@ -12,7 +12,7 @@ setup(
     install_requires=[
         'hammock==0.2.4',
         'pprintpp==0.3.0',
-        'six==1.10.0',
+        'six>=1.10.0',
     ],
     test_suite='nose.collector',
     tests_require=['nose', 'responses'],
