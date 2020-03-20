@@ -211,6 +211,8 @@ class Resource(object):
             self.login()
 
         payload['api_key'] = self.api_key
+        # Need to drop email so it won't confuse Pardot.
+        payload.pop('email')
 
         # run the request and retry once if the request fails with a
         # login error (Pardot API error code '1')
